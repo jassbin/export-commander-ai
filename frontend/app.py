@@ -19,7 +19,7 @@ from app.tools.mock_data import generate_mock_csv
 from app.config import TEXT_MODEL, IMAGE_MODEL
 import app.config as _app_config
 
-st.set_page_config(page_title="出海指挥官 · AI跨境营销闭环", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="出海指挥官 · AI跨境营销闭环", page_icon="🚀", layout="wide", initial_sidebar_state="collapsed")
 
 # ===== 运行模式（侧边栏） =====
 with st.sidebar:
