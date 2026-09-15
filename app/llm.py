@@ -4,7 +4,20 @@ from openai import OpenAI
 from .config import API_KEY, BASE_URL, TEXT_MODEL, IMAGE_MODEL
 import requests
 
-client = OpenAI(api_key=API_KEY, base_url=BASE_URL, max_retries=0)
+_client = None
+
+
+def _get_client():
+    """懒加载 OpenAI 客户端：未配置密钥时，模拟模式无需客户端，仅真实调用时提示"""
+    global _client
+    if _client is None:
+        if not API_KEY:
+            raise RuntimeError(
+                "未配置 API_KEY（真实调用被搁置）。演示请保持 MOCK_MODE=true；"
+                "需要真实调用请在 .env 填 API_KEY 并将 MOCK_MODE 设为 false"
+            )
+        _client = OpenAI(api_key=API_KEY, base_url=BASE_URL, max_retries=0)
+    return _client
 
 
 def chat(messages, model=None, temperature=0.7, json_mode=False):
@@ -19,7 +32,7 @@ def chat(messages, model=None, temperature=0.7, json_mode=False):
     max_retries = 4
     for attempt in range(max_retries):
         try:
-            resp = client.chat.completions.create(**kwargs)
+            resp = _get_client().chat.completions.create(**kwargs)
             return resp.choices[0].message.content
         except Exception as e:
             err = str(e)
@@ -33,7 +46,7 @@ def chat(messages, model=None, temperature=0.7, json_mode=False):
 
 def chat_stream(messages, model=None, temperature=0.7):
     """流式输出"""
-    resp = client.chat.completions.create(
+    resp = _get_client().chat.completions.create(
         model=model or TEXT_MODEL,
         messages=messages,
         temperature=temperature,
@@ -47,6 +60,11 @@ def chat_stream(messages, model=None, temperature=0.7):
 
 def generate_image(prompt, model=None):
     """调用通义万相生成图片，返回图片URL"""
+    if not API_KEY:
+        raise RuntimeError(
+            "未配置 API_KEY：演示模式使用内置 SVG 模拟主图；"
+            "真实出图请在 .env 填 API_KEY 并将 MOCK_MODE 设为 false"
+        )
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json",
