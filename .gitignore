@@ -13,3 +13,5 @@ screenshot.png
 ui_*.png
 ui_*.jpg
 .pwtmp/
+演示视频/rec/
+*.webm

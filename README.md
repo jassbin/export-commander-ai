@@ -22,7 +22,21 @@ streamlit run frontend/app.py --server.port=8501
 ```
 浏览器打开 http://localhost:8501
 
+## 体验方式（已上线）
+
+- 线上 Demo：https://export-commander-ai-6yxng2upjur3gqkdccmbfq.streamlit.app/
+- 本地运行：`pip install -r requirements.txt` && `streamlit run frontend/app.py`
+
+## 演示视频
+
+- **演示视频/demo.mp4**（72 秒实录：全流程 → 素材/红人/投流/诊断闭环 → ROUND 效果卡）
+
+## 技术说明
+
+- 架构、创新点、闭环设计、模拟/真实模式与后续规划见 **`技术说明.md`**
+
 ## 演示流程（推荐）
+
 1. 侧边栏保持「模拟演示模式」开（默认）
 2. 右侧对话大管家输入：**全流程**（或点快捷指令 🚀 全流程）
 3. 观察中间栏 5 个模块依次执行：策略 → 素材(文案+主图) → 红人匹配 → 多渠道投流 → 诊断+迭代
