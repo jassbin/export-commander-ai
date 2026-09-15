@@ -24,14 +24,9 @@ st.set_page_config(page_title="出海指挥官 · AI跨境营销闭环", page_ic
 # ===== 运行模式（侧边栏） =====
 with st.sidebar:
     st.markdown("### 🧠 出海指挥官")
-    _mock_on = st.toggle("🧪 模拟演示模式（不消耗Token）",
-                         value=_app_config.MOCK_MODE,
-                         help="开：所有AI能力返回预置模拟数据，用于演示；关：调用真实大模型（需额度）")
+    _mock_on = st.toggle(" ",
+              value=_app_config.MOCK_MODE)
 _app_config.MOCK_MODE = _mock_on
-if _mock_on:
-    st.caption("当前：模拟模式 — 全程离线，不调用 API")
-else:
-    st.caption("当前：真实模式 — 调用百炼大模型")
 
 # =====================================================================
 # 全局样式
@@ -712,7 +707,7 @@ with col_center:
                         try:
                             _iu = _c["image_url"]
                             if _iu.startswith("http") or _iu.startswith("data:"):
-                                st.image(_iu, caption="AI 生成主图 · 模拟", use_container_width=True)
+                                st.image(_iu, caption="AI 生成主图", use_container_width=True)
                         except Exception as _e:
                             st.error("图片加载失败：%s" % _e)
                     elif _c.get("image_error"):
@@ -908,5 +903,4 @@ if st.session_state.get("exec_queue"):
     time.sleep(1)
     st.rerun()
 
-_mock_note = "模拟演示模式 · 不消耗 Token" if _mock_on else ("百炼大模型 · " + TEXT_MODEL)
-st.markdown('<div class="footer">出海指挥官 · 跨境AI营销闭环系统 ｜ %s</div>' % _mock_note, unsafe_allow_html=True)
+st.markdown('<div class="footer">出海指挥官 · 跨境AI营销闭环系统</div>', unsafe_allow_html=True)
